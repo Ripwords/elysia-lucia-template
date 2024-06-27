@@ -1,7 +1,7 @@
 import cors from "@elysiajs/cors"
 import swagger from "@elysiajs/swagger"
 import Elysia from "elysia"
-import { sessionCleaner } from "../plugins/cron"
+import { SessionCleaner } from "../plugins/cron"
 import { envSchema } from "../plugins/env"
 import { AuthController } from "./auth/auth"
 import { UsersController } from "./users"
@@ -37,7 +37,7 @@ const app = new Elysia()
   .use(pluginUnifyElysia())
   .use(AuthController)
   .use(UsersController)
-  .use(sessionCleaner)
+  .use(SessionCleaner)
   .listen(process.env.SERVER_PORT!)
 
 console.log(

@@ -14,7 +14,7 @@ export const signin = new Elysia()
   })
   .post(
     "/signin",
-    async ({ body: { email, password }, cookie, set }) => {
+    async ({ body: { email, password }, cookie }) => {
       const user = await prismaClient.user.findUnique({
         where: {
           email,

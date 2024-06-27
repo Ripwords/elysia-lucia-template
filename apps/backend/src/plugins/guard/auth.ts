@@ -69,6 +69,3 @@ export const authGuard = new Elysia({
       return { user }
     }
   )
-  .onError((error) => {
-    console.error(error)
-  })

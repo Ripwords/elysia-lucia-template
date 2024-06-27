@@ -4,7 +4,7 @@ import { ErrorHandler } from "../../../lib/errors/errorHandler"
 
 export const passwordResetRequest = new Elysia().post(
   "/",
-  async ({ body: { email }, set }) => {
+  async ({ body: { email } }) => {
     // Check if user exists
     const user = await prismaClient.user.findUnique({
       where: {
