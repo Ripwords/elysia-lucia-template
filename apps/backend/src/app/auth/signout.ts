@@ -1,11 +1,11 @@
 import Elysia from "elysia"
 import { lucia } from "../../lib/auth"
-import { Errors } from "elysia-fault"
+import { ErrorHandler } from "../../lib/errors/errorHandler"
 
 export const signout = new Elysia().post("/signout", async ({ cookie }) => {
   const sessionCookie = cookie[lucia.sessionCookieName]
   if (!sessionCookie.value) {
-    throw new Errors.BadRequest("Session not found")
+    throw ErrorHandler.BadRequest("Session not found")
   }
   await lucia.invalidateSession(sessionCookie.value)
   const blankCookie = lucia.createBlankSessionCookie()

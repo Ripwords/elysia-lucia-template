@@ -1,7 +1,7 @@
 import { lucia } from "../../lib/auth"
 import { Elysia, t } from "elysia"
-import { Errors } from "elysia-fault"
 import { verifyRequestOrigin } from "lucia"
+import { ErrorHandler } from "../../lib/errors/errorHandler"
 
 const sessionCookieName = lucia.sessionCookieName
 
@@ -24,12 +24,10 @@ export const authGuard = new Elysia({
       cookie,
       headers: { authorization, origin, host },
       request: { method },
-      set,
     }) => {
       const sessionCookie = cookie[sessionCookieName]
       const sessionId: string | null | undefined =
         lucia.readBearerToken(authorization ?? "") ?? sessionCookie?.value
-      console.log(sessionId)
 
       if (
         !authorization &&
@@ -38,17 +36,17 @@ export const authGuard = new Elysia({
           !host ||
           !verifyRequestOrigin(origin, [process.env.WEBSITE_URL!]))
       ) {
-        throw new Errors.Forbidden("Invalid Origin")
+        throw ErrorHandler.Forbidden("Invalid Origin")
       }
 
       if (!sessionId) {
-        throw new Errors.Unauthorized("You are not authenticated")
+        throw ErrorHandler.Unauthorized("You are not authenticated")
       }
 
       const { session, user } = await lucia.validateSession(sessionId)
-      console.log(session, user)
+
       if (!session && !user) {
-        throw new Errors.Unauthorized("Session is invalid")
+        throw ErrorHandler.Unauthorized("Session is invalid")
       }
 
       if (!session) {
@@ -57,7 +55,7 @@ export const authGuard = new Elysia({
           value: newSessionCookie.value,
           ...newSessionCookie.attributes,
         })
-        throw new Errors.Unauthorized("Session is invalid")
+        throw ErrorHandler.Unauthorized("Session is invalid")
       }
 
       if (session?.fresh) {
@@ -71,3 +69,6 @@ export const authGuard = new Elysia({
       return { user }
     }
   )
+  .onError((error) => {
+    console.error(error)
+  })

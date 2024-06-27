@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia"
 import { prismaClient } from "../../../lib/prisma"
-import { Errors } from "elysia-fault"
+import { ErrorHandler } from "../../../lib/errors/errorHandler"
 
 export const passwordResetRequest = new Elysia().post(
   "/",
@@ -13,9 +13,9 @@ export const passwordResetRequest = new Elysia().post(
     })
 
     if (!user) {
-      throw new Errors.BadRequest("User with this email does not exist")
+      throw ErrorHandler.BadRequest("User with this email does not exist")
     }
-    
+
     // Send password reset email
     return {
       status: 200,

@@ -3,6 +3,7 @@ import { prismaClient } from "../../lib/prisma"
 import { password as bunPassword } from "bun"
 import { lucia } from "../../lib/auth"
 import { ObjectId } from "bson"
+import { ErrorHandler } from "../../lib/errors/errorHandler"
 
 export const signin = new Elysia()
   .model({
@@ -21,12 +22,7 @@ export const signin = new Elysia()
       })
 
       if (!user) {
-        return {
-          status: 400,
-          body: {
-            message: "User with this email does not exist",
-          },
-        }
+        throw ErrorHandler.NotFound("User with this email does not exist")
       }
 
       const passwordHash = await bunPassword.verify(
@@ -35,12 +31,7 @@ export const signin = new Elysia()
       )
 
       if (!passwordHash) {
-        return {
-          status: 400,
-          body: {
-            message: "Incorrect password",
-          },
-        }
+        throw ErrorHandler.Unauthorized("Invalid password")
       }
 
       const session = await lucia.createSession(new ObjectId(user.id), {

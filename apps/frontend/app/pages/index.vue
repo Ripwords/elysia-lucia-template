@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { treaty } from "@elysiajs/eden"
-import type { App } from "../../../backend/src/app"
+import type { App } from "../../../backend/src/app/main"
 
 const client = treaty<App>(import.meta.env.VITE_SERVER_URL, {
   fetch: {
@@ -8,33 +8,55 @@ const client = treaty<App>(import.meta.env.VITE_SERVER_URL, {
   },
 })
 
+const user = ref()
+const email = ref("")
+const password = ref("")
+
 const signIn = async () => {
-  console.log("SIGNING IN...")
-  const { data, error } = await client.auth.signin.post({
-    email: "teohjjteoh@gmail.com",
-    password: "teohjjteoh@gmail.com",
+  await client.auth.signin.post({
+    email: email.value,
+    password: password.value,
   })
 
-  console.log(error)
-  console.log(data)
+  await getUser()
 }
 
 const signOut = async () => {
-  console.log("SIGNING OUT...")
-  const { data, error } = await client.auth.signout.post()
-  console.log(error)
-  console.log(data)
+  await client.auth.signout.post()
+  user.value = null
 }
 
 const getUser = async () => {
   const { data, error } = await client.users.me.get()
-  console.log(error)
-  console.log(data)
+  if (error) {
+    switch (error.status) {
+      case 401:
+        console.log("UNAUTHORIZED")
+        break
+      default:
+        console.log("ERROR")
+        break
+    }
+  }
+  user.value = data
 }
 </script>
 
 <template>
+  <input
+    v-model="email"
+    type="text"
+    placeholder="Email"
+  />
+  <input
+    v-model="password"
+    type="password"
+    placeholder="Password"
+  />
+  <br />
   <button @click="signIn">Sign In</button>
   <button @click="signOut">Sign Out</button>
   <button @click="getUser">Get User</button>
+
+  <div v-if="user">{{ user }}</div>
 </template>

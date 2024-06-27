@@ -4,8 +4,8 @@ import { alphabet, generateRandomString } from "oslo/crypto"
 import { prismaClient } from "../../lib/prisma"
 import { lucia } from "../../lib/auth"
 import { ObjectId } from "bson"
-import { Errors } from "elysia-fault"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
+import { ErrorHandler } from "../../lib/errors/errorHandler"
 
 export const signup = new Elysia({
   detail: {
@@ -38,9 +38,9 @@ export const signup = new Elysia({
         }
       } catch (e) {
         if (e instanceof PrismaClientKnownRequestError) {
-          throw new Errors.InternalServerError()
+          throw ErrorHandler.InternalServerError("Database error")
         } else {
-          throw new Errors.BadRequest("User with this email already exists")
+          throw ErrorHandler.BadRequest("User with this email already exists")
         }
       }
 
@@ -87,7 +87,7 @@ export const signup = new Elysia({
           username: newUser.name,
         }
       } catch {
-        throw new Errors.InternalServerError()
+        throw ErrorHandler.InternalServerError()
       }
     },
     {

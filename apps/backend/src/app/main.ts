@@ -1,11 +1,11 @@
 import cors from "@elysiajs/cors"
 import swagger from "@elysiajs/swagger"
 import Elysia from "elysia"
-import { elysiaFault } from "elysia-fault"
 import { sessionCleaner } from "../plugins/cron"
 import { envSchema } from "../plugins/env"
 import { AuthController } from "./auth/auth"
 import { UsersController } from "./users"
+import { pluginUnifyElysia } from "unify-elysia"
 
 // Ensures that environment variables are set
 envSchema.parse(process.env)
@@ -34,7 +34,7 @@ const app = new Elysia()
       },
     })
   )
-  .use(elysiaFault())
+  .use(pluginUnifyElysia())
   .use(AuthController)
   .use(UsersController)
   .use(sessionCleaner)
