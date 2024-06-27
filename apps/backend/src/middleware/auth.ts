@@ -1,7 +1,7 @@
 import { lucia } from "../lib/auth"
 import { Elysia, t } from "elysia"
 import { verifyRequestOrigin } from "lucia"
-import { ErrorHandler } from "@/lib/errors/errorHandler"
+import { ErrorHandler } from "@/lib/errors"
 
 const sessionCookieName = lucia.sessionCookieName
 
