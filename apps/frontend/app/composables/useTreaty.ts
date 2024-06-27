@@ -7,6 +7,7 @@ export const useTreaty = () => {
       credentials: "include",
     },
   })
+
   return {
     client,
   }
