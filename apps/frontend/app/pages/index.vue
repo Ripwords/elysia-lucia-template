@@ -1,12 +1,5 @@
 <script lang="ts" setup>
-import { treaty } from "@elysiajs/eden"
-import type { App } from "../../../backend/src/app/main"
-
-const client = treaty<App>(import.meta.env.VITE_SERVER_URL, {
-  fetch: {
-    credentials: "include",
-  },
-})
+const { client } = useTreaty()
 
 const user = ref()
 const email = ref("")
@@ -27,17 +20,7 @@ const signOut = async () => {
 }
 
 const getUser = async () => {
-  const { data, error } = await client.users.me.get()
-  if (error) {
-    switch (error.status) {
-      case 401:
-        console.log("UNAUTHORIZED")
-        break
-      default:
-        console.log("ERROR")
-        break
-    }
-  }
+  const { data } = await client.users.me.get()
   user.value = data
 }
 </script>

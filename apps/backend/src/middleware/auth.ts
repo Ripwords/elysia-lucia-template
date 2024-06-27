@@ -1,10 +1,11 @@
-import { lucia } from "../../lib/auth"
+import { lucia } from "../lib/auth"
 import { Elysia, t } from "elysia"
 import { verifyRequestOrigin } from "lucia"
-import { ErrorHandler } from "../../lib/errors/errorHandler"
+import { ErrorHandler } from "@/lib/errors/errorHandler"
 
 const sessionCookieName = lucia.sessionCookieName
 
+// Auth guard middleware
 export const authGuard = new Elysia({
   name: "authGuard",
 })
@@ -25,10 +26,7 @@ export const authGuard = new Elysia({
       headers: { authorization, origin, host },
       request: { method },
     }) => {
-      const sessionCookie = cookie[sessionCookieName]
-      const sessionId: string | null | undefined =
-        lucia.readBearerToken(authorization ?? "") ?? sessionCookie?.value
-
+      // CSRF protection
       if (
         !authorization &&
         method !== "GET" &&
@@ -39,16 +37,25 @@ export const authGuard = new Elysia({
         throw ErrorHandler.Forbidden("Invalid Origin")
       }
 
+      // Get session id from cookie or authorization header
+      const sessionCookie = cookie[sessionCookieName]
+      const sessionId: string | null | undefined =
+        lucia.readBearerToken(authorization ?? "") ?? sessionCookie?.value
+
+      // If session id is not found, user is not authenticated
       if (!sessionId) {
         throw ErrorHandler.Unauthorized("You are not authenticated")
       }
 
+      // Validate session
       const { session, user } = await lucia.validateSession(sessionId)
 
+      // Throw error if session is invalid
       if (!session && !user) {
         throw ErrorHandler.Unauthorized("Session is invalid")
       }
 
+      // If session has expired, return unauthorized
       if (!session) {
         const newSessionCookie = lucia.createBlankSessionCookie()
         sessionCookie?.set({
@@ -58,6 +65,7 @@ export const authGuard = new Elysia({
         throw ErrorHandler.Unauthorized("Session is invalid")
       }
 
+      // If session is fresh, update session cookie
       if (session?.fresh) {
         const newSessionCookie = lucia.createSessionCookie(sessionId)
         sessionCookie?.set({

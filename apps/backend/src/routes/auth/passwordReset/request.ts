@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia"
-import { prismaClient } from "../../../lib/prisma"
-import { ErrorHandler } from "../../../lib/errors/errorHandler"
+import { ErrorHandler } from "@/lib/errors/errorHandler"
+import { prismaClient } from "@/lib/prisma"
 
 export const passwordResetRequest = new Elysia().post(
   "/",

@@ -1,10 +1,10 @@
 import cors from "@elysiajs/cors"
 import swagger from "@elysiajs/swagger"
 import Elysia from "elysia"
-import { SessionCleaner } from "../plugins/cron"
-import { envSchema } from "../plugins/env"
-import { AuthController } from "./auth/auth"
-import { UsersController } from "./users"
+import { SessionCleaner } from "@/plugins/cron"
+import { envSchema } from "@/plugins/env"
+import { AuthController } from "@/routes/auth"
+import { UsersController } from "@/routes/users"
 import { pluginUnifyElysia } from "unify-elysia"
 
 // Ensures that environment variables are set

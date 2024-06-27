@@ -1,11 +1,11 @@
 import Elysia, { t } from "elysia"
 import { password as bunPassword } from "bun"
 import { alphabet, generateRandomString } from "oslo/crypto"
-import { prismaClient } from "../../lib/prisma"
-import { lucia } from "../../lib/auth"
+import { prismaClient } from "@/lib/prisma"
+import { lucia } from "@/lib/auth"
 import { ObjectId } from "bson"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
-import { ErrorHandler } from "../../lib/errors/errorHandler"
+import { ErrorHandler } from "@/lib/errors/errorHandler"
 
 export const signup = new Elysia({
   detail: {

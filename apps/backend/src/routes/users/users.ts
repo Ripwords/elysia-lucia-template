@@ -1,5 +1,5 @@
 import Elysia from "elysia"
-import { authGuard } from "../../plugins/guard/auth"
+import { authGuard } from "@/middleware/auth"
 
 export const UsersController = new Elysia({
   prefix: "/users",

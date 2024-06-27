@@ -1,8 +1,8 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma"
-import { prismaClient } from "../prisma"
-import { Lucia } from "lucia"
 import { User } from "@prisma/client"
 import { ObjectId } from "bson"
+import { Lucia } from "lucia"
+import { prismaClient } from "../prisma"
 
 interface DatabaseUserAttributes {
   name: User["name"]
@@ -41,7 +41,6 @@ declare module "lucia" {
   interface Register {
     Lucia: typeof lucia
     UserId: ObjectId
-    SessionId: string
     DatabaseUserAttributes: DatabaseUserAttributes
     DatabaseSessionAttributes: DatabaseSessionAttributes
   }

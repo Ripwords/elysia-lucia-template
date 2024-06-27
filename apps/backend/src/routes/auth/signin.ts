@@ -1,9 +1,9 @@
-import Elysia, { t } from "elysia"
-import { prismaClient } from "../../lib/prisma"
-import { password as bunPassword } from "bun"
-import { lucia } from "../../lib/auth"
 import { ObjectId } from "bson"
-import { ErrorHandler } from "../../lib/errors/errorHandler"
+import { password as bunPassword } from "bun"
+import Elysia, { t } from "elysia"
+import { lucia } from "@/lib/auth"
+import { ErrorHandler } from "@/lib/errors/errorHandler"
+import { prismaClient } from "@/lib/prisma"
 
 export const signin = new Elysia()
   .model({
