@@ -25,7 +25,7 @@ describe("Users", () => {
     const { data, error } = await api.users.me.get({
       fetch: {
         headers: {
-          Cookie: cookies.join(","),
+          Cookie: cookies.toString(),
         },
       },
     })
