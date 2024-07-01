@@ -5,7 +5,7 @@
     "dev": "bun --watch src/main.ts",
     "build": "bun build src/main.ts --target=bun --minify --splitting --outdir=dist",
     "start": "bun run build && NODE_ENV=production bun dist/main.js",
-    "test": "bun test"
+    "test": "bun test --env-file=.env.test"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",

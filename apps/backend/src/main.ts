@@ -5,7 +5,7 @@ import { SessionCleaner } from "@/plugins/cron"
 import { envSchema } from "@/plugins/env"
 import { AuthController } from "@/routes/auth"
 import { UsersController } from "@/routes/users"
-import { pluginUnifyElysia } from "unify-elysia"
+import { UnifyErrorPlugin } from "./lib/errors"
 
 // Ensures that environment variables are set
 envSchema.parse(process.env)
@@ -34,7 +34,7 @@ const app = new Elysia()
       },
     })
   )
-  .use(pluginUnifyElysia())
+  .use(UnifyErrorPlugin)
   .use(AuthController)
   .use(UsersController)
   .use(SessionCleaner)

@@ -4,20 +4,27 @@ import { lucia } from "@/lib/auth"
 import { ErrorHandler } from "@/lib/errors"
 import { prismaClient } from "@/lib/prisma"
 import { Cookie } from "elysia"
+import { User } from "lucia"
 
 export const userSignIn = async (
   email: string,
   password: string,
   cookie: Record<string, Cookie<any>>
 ) => {
-  const user = await prismaClient.user.findUnique({
-    where: {
-      email,
-    },
-  })
+  let user: Awaited<ReturnType<typeof prismaClient.user.findUnique>>
 
-  if (!user) {
-    throw ErrorHandler.NotFound("User with this email does not exist")
+  try {
+    user = await prismaClient.user.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if (!user) {
+      throw Error
+    }
+  } catch {
+    throw ErrorHandler.Unauthorized("User with this email does not exist")
   }
 
   const passwordHash = await bunPassword.verify(

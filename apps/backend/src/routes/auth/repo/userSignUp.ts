@@ -10,9 +10,14 @@ import { Cookie } from "elysia"
 export const userSignUp = async (
   email: string,
   password: string,
+  confirmPassword: string,
   username: string,
   cookie: Record<string, Cookie<any>>
 ) => {
+  if (password !== confirmPassword) {
+    throw ErrorHandler.BadRequest("Passwords do not match")
+  }
+
   try {
     const emailExists = await prismaClient.user.findUnique({
       where: {

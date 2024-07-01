@@ -15,11 +15,7 @@ export const signup = new Elysia({
       body: { email, password, confirmPassword, username },
       cookie,
     }) => {
-      if (password !== confirmPassword) {
-        throw ErrorHandler.BadRequest("Passwords do not match")
-      }
-
-      await userSignUp(email, password, username, cookie)
+      await userSignUp(email, password, confirmPassword, username, cookie)
     },
     {
       body: "userSignUpDto",
