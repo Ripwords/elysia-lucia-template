@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun --watch src/main.ts",
-    "build": "bun build src/main.ts --target=bun --minify --splitting --outdir=dist",
-    "start": "bun run build && NODE_ENV=production bun dist/main.js",
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --target=bun --minify --splitting --outdir=dist",
+    "start": "bun run build && NODE_ENV=production bun dist/index.js",
     "test": "bun lint && bun test --env-file=.env.test",
     "lint": "eslint . --fix"
   },
