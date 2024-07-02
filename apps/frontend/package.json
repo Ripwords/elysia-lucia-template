@@ -7,15 +7,26 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "module": "bun x nuxi@latest module",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.0.14",
-    "nuxt": "^3.12.2",
+    "@nuxt/eslint": "^0.3.13",
+    "@nuxt/icon": "^1.0.0",
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@primevue/themes": "4.0.0-rc.3",
+    "nuxt": "^3.12.3",
+    "primeicons": "^7.0.0",
+    "primevue": "4.0.0-rc.3",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "elysia": "^1.0.25"
+    "elysia": "^1.0.25",
+    "@primevue/nuxt-module": "4.0.0-rc.3"
   }
 }

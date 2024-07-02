@@ -23,5 +23,13 @@
   "dependencies": {
     "@elysiajs/cron": "^1.0.3",
     "oslo": "^1.2.0"
-  }
+  },
+  "trustedDependencies": [
+    "@prisma/client",
+    "@prisma/engines",
+    "esbuild",
+    "nuxt-app",
+    "prisma",
+    "protobufjs"
+  ]
 }

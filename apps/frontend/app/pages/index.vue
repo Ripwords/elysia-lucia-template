@@ -26,20 +26,20 @@ const getUser = async () => {
 </script>
 
 <template>
-  <input
-    v-model="email"
-    type="text"
-    placeholder="Email"
-  />
-  <input
-    v-model="password"
-    type="password"
-    placeholder="Password"
-  />
-  <br />
-  <button @click="signIn">Sign In</button>
-  <button @click="signOut">Sign Out</button>
-  <button @click="getUser">Get User</button>
+  <div>
+    <InputText
+      v-model="email"
+      type="email"
+      placeholder="Email"
+    />
+    <Password
+      v-model="password"
+      placeholder="Password"
+    />
+    <Button @click="signIn">Sign In</Button>
+    <Button @click="signOut">Sign Out</Button>
+    <Button @click="getUser">Get User</Button>
 
-  <div v-if="user">{{ user }}</div>
+    <div v-if="user">{{ user }}</div>
+  </div>
 </template>
