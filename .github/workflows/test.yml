@@ -1,0 +1,30 @@
+name: Run Unit Tests
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test_lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup environment
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install bun
+        run: bun install
+
+      - name: Run Lint
+        run: bun lint
+
+      - name: Run Test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PASSWORD_PEPPER: ${{ secrets.PASSWORD_PEPPER }}
+        run: |
+          cd apps/backend
+          npx prisma generate
+          bun test
