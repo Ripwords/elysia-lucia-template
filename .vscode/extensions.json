@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "aaron-bond.better-comments",
+    "oven.bun-vscode",
+    "mhutchie.git-graph",
+    "wix.vscode-import-cost",
+    "ms-vscode.vscode-typescript-next",
+    "YoavBls.pretty-ts-errors",
+    "esbenp.prettier-vscode"
+  ]
+}
