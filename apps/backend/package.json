@@ -5,7 +5,8 @@
     "dev": "bun --watch src/main.ts",
     "build": "bun build src/main.ts --target=bun --minify --splitting --outdir=dist",
     "start": "bun run build && NODE_ENV=production bun dist/main.js",
-    "test": "bun test --env-file=.env.test"
+    "test": "bun lint && bun test --env-file=.env.test",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
@@ -24,8 +25,12 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.6.0",
     "@types/adm-zip": "^0.5.5",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "eslint": "9.x",
+    "globals": "^15.7.0",
+    "typescript-eslint": "^7.15.0"
   },
   "module": "src/index.js",
   "type": "module",

@@ -1,5 +1,6 @@
 import Elysia from "elysia"
 import { authGuard } from "@/middleware/authGuard"
+import { GetUsersResponseDto } from "./dto/get-users.dto"
 
 export const UsersController = new Elysia({
   prefix: "/users",
@@ -8,10 +9,16 @@ export const UsersController = new Elysia({
   },
 })
   .use(authGuard)
-  .get("/me", ({ user }) => {
-    return {
-      id: user.id,
-      email: user.email,
-      username: user.name,
+  .get(
+    "/me",
+    ({ user }) => {
+      return {
+        id: user.id.toString(),
+        email: user.email,
+        username: user.name,
+      }
+    },
+    {
+      response: GetUsersResponseDto,
     }
-  })
+  )

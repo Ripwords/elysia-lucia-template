@@ -1,8 +1,6 @@
 import Elysia from "elysia"
 import { signout } from "./signout"
 import { signup } from "./signup"
-import { userSignInDto } from "./dto/userSignIn.dto"
-import { userSignIn } from "./repo/userSignIn"
 import { signin } from "./signin"
 
 export const AuthController = new Elysia({

@@ -1,14 +1,14 @@
 import Elysia from "elysia"
 import { userSignIn } from "./repo/userSignIn"
-import { userSignInDto } from "./dto/userSignIn.dto"
+import { SignInDto, SignInResponseDto } from "./dto/signin.dto"
 
-export const signin = new Elysia().model(userSignInDto).post(
+export const signin = new Elysia().post(
   "/signin",
   async ({ body: { email, password }, cookie }) => {
-    const user = await userSignIn(email, password, cookie)
-    return user
+    return await userSignIn(email, password, cookie)
   },
   {
-    body: "userSignInDto",
+    body: SignInDto,
+    response: SignInResponseDto,
   }
 )

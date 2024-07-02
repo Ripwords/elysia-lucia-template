@@ -4,13 +4,13 @@ import { lucia } from "@/lib/auth"
 import { ErrorHandler } from "@/lib/errors"
 import { prismaClient } from "@/lib/prisma"
 import { Cookie } from "elysia"
-import { User } from "lucia"
+import { SignInResponse } from "../dto/signin.dto"
 
 export const userSignIn = async (
   email: string,
   password: string,
   cookie: Record<string, Cookie<any>>
-) => {
+): Promise<SignInResponse> => {
   let user: Awaited<ReturnType<typeof prismaClient.user.findUnique>>
 
   try {
