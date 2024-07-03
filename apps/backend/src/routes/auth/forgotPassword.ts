@@ -1,6 +1,10 @@
 import { rateGuard } from "@/middleware/rateLimitter"
-import Elysia, { t } from "elysia"
+import Elysia from "elysia"
 import { passwordReset, verifyPasswordResetToken } from "./repo/forgotPassword"
+import {
+  ForgotPasswordDto,
+  ForgotPasswordVerifyDto,
+} from "./dto/forgotPassword.dto"
 
 export const forgotPassword = new Elysia({
   prefix: "/forgot-password",
@@ -12,9 +16,7 @@ export const forgotPassword = new Elysia({
       return await passwordReset(email)
     },
     {
-      body: t.Object({
-        email: t.String({ format: "email" }),
-      }),
+      body: ForgotPasswordDto,
     }
   )
   .post(
@@ -23,8 +25,7 @@ export const forgotPassword = new Elysia({
       return await verifyPasswordResetToken(token)
     },
     {
-      params: t.Object({
-        token: t.String(),
-      }),
+      params: ForgotPasswordVerifyDto.params,
+      body: ForgotPasswordVerifyDto.body,
     }
   )

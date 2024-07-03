@@ -1,7 +1,7 @@
 import cors from "@elysiajs/cors"
 import swagger from "@elysiajs/swagger"
 import Elysia from "elysia"
-import { SessionCleaner, VerificationTokenCleaner } from "@/plugins/cron"
+import { SessionCleaner, TokenCleaner } from "@/plugins/cron"
 import { envSchema } from "@/plugins/env"
 import { AuthController } from "@/routes/auth"
 import { UsersController } from "@/routes/users"
@@ -40,7 +40,7 @@ const app = new Elysia()
   .use(AuthController)
   .use(UsersController)
   .use(SessionCleaner)
-  .use(VerificationTokenCleaner)
+  .use(TokenCleaner)
   .listen(process.env.SERVER_PORT!, () => {
     console.log(
       `🦊 Elysia is running! http://localhost:${process.env.SERVER_PORT}/swagger`

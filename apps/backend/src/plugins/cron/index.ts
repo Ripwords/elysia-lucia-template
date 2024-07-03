@@ -16,13 +16,20 @@ export const SessionCleaner = new Elysia().use(
   })
 )
 
-export const VerificationTokenCleaner = new Elysia().use(
+export const TokenCleaner = new Elysia().use(
   cron({
-    name: "cleanExpiredVerificationTokens",
+    name: "cleanExpiredTokens",
     pattern: "*/15 * * * *",
     async run() {
       await prisma.$transaction([
         prisma.emailVerificationToken.deleteMany({
+          where: {
+            expiresAt: {
+              lte: new Date(),
+            },
+          },
+        }),
+        prisma.passwordResetToken.deleteMany({
           where: {
             expiresAt: {
               lte: new Date(),

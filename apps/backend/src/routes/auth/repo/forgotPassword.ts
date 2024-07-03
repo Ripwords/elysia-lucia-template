@@ -22,9 +22,6 @@ export const passwordReset = async (email: string) => {
     token + process.env.PASSWORD_PEPPER
   )
 
-  console.log(token)
-  console.log(hashedToken)
-
   try {
     await prisma.$transaction([
       // Delete all existing password reset tokens
