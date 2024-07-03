@@ -42,7 +42,9 @@ const app = new Elysia()
   .use(SessionCleaner)
   .use(VerificationTokenCleaner)
   .listen(process.env.SERVER_PORT!, () => {
-    console.log(`🦊 Elysia is running!`)
+    console.log(
+      `🦊 Elysia is running! http://localhost:${process.env.SERVER_PORT}/swagger`
+    )
   })
 
 export type App = typeof app

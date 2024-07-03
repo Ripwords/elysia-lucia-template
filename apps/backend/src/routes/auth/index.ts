@@ -2,8 +2,8 @@ import Elysia from "elysia"
 import { signout } from "./signout"
 import { signup } from "./signup"
 import { signin } from "./signin"
-import { verifyEmail } from "./verifyEmail"
-import { sendVerification } from "./sendVerification"
+import { verifyEmail } from "./emailVerification"
+import { forgotPassword } from "./forgotPassword"
 
 export const AuthController = new Elysia({
   prefix: "/auth",
@@ -12,7 +12,7 @@ export const AuthController = new Elysia({
   },
 })
   .use(verifyEmail)
-  .use(sendVerification)
+  .use(forgotPassword)
   .use(signup)
   .use(signin)
   .use(signout)

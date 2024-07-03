@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma"
 import { TimeSpan, createDate } from "oslo"
 import { generateRandomString, alphabet } from "oslo/crypto"
-import { createTransport } from "nodemailer"
 import { User } from "lucia"
 import { Cookie } from "elysia"
 import { lucia } from "@/lib/auth"
 import { ObjectId } from "bson"
 import { ErrorHandler } from "@/lib/errors"
+import { sendEmail } from "@/lib/utils/email"
 
 export const generateEmailVerificationCode = async (
   userId: string,
@@ -41,27 +41,11 @@ export const generateEmailVerificationCode = async (
 }
 
 export const sendVerificationEmail = async (email: string, code: string) => {
-  const auth = {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  }
-
-  const transporter = createTransport({
-    name: process.env.SMTP_HOST!.split(".").slice(-2).join("."),
-    host: process.env.SMTP_HOST,
-    port: 465,
-    secure: true,
-    auth,
-  })
-
-  const info = await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: email,
-    subject: "Email Verification",
-    text: `Your email verification code is: ${code}`,
-  })
-
-  console.log(info)
+  await sendEmail(
+    email,
+    "Email Verification",
+    `Your email verification code is: ${code}`
+  )
 }
 
 export const verifyEmailVerificationCode = async (
@@ -112,4 +96,19 @@ export const verifyEmailVerificationCode = async (
   return {
     message: "Email verification successful",
   }
+}
+
+export const sendEmailVerification = async (user: User) => {
+  // Check if user email is already verified
+  if (user.emailVerified) {
+    throw ErrorHandler.BadRequest("Email is already verified")
+  }
+
+  const verificationCode = await generateEmailVerificationCode(
+    user.id.toString(),
+    user.email
+  )
+  await sendVerificationEmail(user.email, verificationCode)
+
+  return { message: "Email verification sent" }
 }

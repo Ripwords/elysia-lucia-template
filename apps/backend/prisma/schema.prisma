@@ -14,14 +14,13 @@ datasource db {
 }
 
 model User {
-  id                 String              @id @default(auto()) @map("_id") @db.ObjectId
-  name               String
-  email              String              @unique
-  emailVerified      Boolean             @default(false) @map("email_verified")
-  hashedPassword     String?             @map("hashed_password")
-  passwordSalt       String?             @map("password_salt")
-  sessions           Session[]
-  PasswordResetToken PasswordResetToken?
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String    @unique
+  emailVerified  Boolean   @default(false) @map("email_verified")
+  hashedPassword String?   @map("hashed_password")
+  passwordSalt   String?   @map("password_salt")
+  sessions       Session[]
 }
 
 model Session {
@@ -37,9 +36,8 @@ model Session {
 model PasswordResetToken {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   userId      String   @unique @map("user_id") @db.ObjectId
-  hashedToken String   @unique @map("hashed_token")
+  hashedToken String   @map("hashed_token")
   expiresAt   DateTime @map("expires_at")
-  user        User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 }
 
 model EmailVerificationToken {
