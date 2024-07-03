@@ -2,19 +2,19 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma"
 import { User } from "@prisma/client"
 import { ObjectId } from "bson"
 import { Lucia } from "lucia"
-import { prismaClient } from "../prisma"
+import { prisma } from "../prisma"
 
 interface DatabaseUserAttributes {
   name: User["name"]
   email: User["email"]
-  hashedPassword: User["hashedPassword"]
+  emailVerified: User["emailVerified"]
 }
 
 interface DatabaseSessionAttributes {
   userId: User["id"]
 }
 
-const adapter = new PrismaAdapter(prismaClient.session, prismaClient.user)
+const adapter = new PrismaAdapter(prisma.session, prisma.user)
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
@@ -27,7 +27,7 @@ export const lucia = new Lucia(adapter, {
     return {
       name: attributes.name,
       email: attributes.email,
-      hashedPassword: attributes.hashedPassword,
+      emailVerified: attributes.emailVerified,
     }
   },
   getSessionAttributes: (attributes) => {

@@ -2,7 +2,7 @@ import { ObjectId } from "bson"
 import { password as bunPassword } from "bun"
 import { lucia } from "@/lib/auth"
 import { ErrorHandler } from "@/lib/errors"
-import { prismaClient } from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 import { Cookie } from "elysia"
 import { SignInResponse } from "../dto/signin.dto"
 
@@ -11,10 +11,10 @@ export const userSignIn = async (
   password: string,
   cookie: Record<string, Cookie<any>>
 ): Promise<SignInResponse> => {
-  let user: Awaited<ReturnType<typeof prismaClient.user.findUnique>>
+  let user: Awaited<ReturnType<typeof prisma.user.findUnique>>
 
   try {
-    user = await prismaClient.user.findUnique({
+    user = await prisma.user.findUnique({
       where: {
         email,
       },

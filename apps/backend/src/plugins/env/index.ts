@@ -6,4 +6,7 @@ export const envSchema = z.object({
   WEBSITE_URL: z.string(),
   PASSWORD_PEPPER: z.string(),
   DATABASE_URL: z.string(),
+  SMTP_USER: z.string().email(),
+  SMTP_PASSWORD: z.string(),
+  SMTP_HOST: z.string(),
 })

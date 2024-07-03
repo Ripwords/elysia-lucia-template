@@ -68,6 +68,7 @@ export class ErrorHandler {
 export const UnifyErrorPlugin = new Elysia({
   name: "unify-error-elysia",
 }).onError({ as: "global" }, ({ code, error, set }) => {
+  console.error(error.stack)
   let httpCode = 0
   let customErrorMessage
 
@@ -80,8 +81,9 @@ export const UnifyErrorPlugin = new Elysia({
   let errorMessage: Error | undefined
   try {
     errorMessage = JSON.parse(error.message)
-    // eslint-disable-next-line no-empty
-  } catch (err) {}
+  } catch (_) {
+    _
+  }
 
   switch (errorName) {
     case BadRequest.name: {
@@ -131,10 +133,12 @@ export const UnifyErrorPlugin = new Elysia({
   if (code === "VALIDATION") {
     set.status = 400
 
+    customErrorMessage = error.validator.Errors(error.value).First()
+
     return {
       error: "Bad Request",
       context: {
-        message: error.validator.Errors(error.value).First().message,
+        message: customErrorMessage.schema.error || customErrorMessage.message,
       },
     }
   } else if (error?.message?.toLowerCase()?.includes("rate limit")) {
@@ -142,7 +146,6 @@ export const UnifyErrorPlugin = new Elysia({
 
     return {
       error: "Too Many Requests",
-      stack: error.stack,
     }
   } else {
     switch (code) {

@@ -1,12 +1,16 @@
 import { ErrorHandler } from "@/lib/errors"
 import { password as bunPassword } from "bun"
 import { alphabet, generateRandomString } from "oslo/crypto"
-import { prismaClient } from "@/lib/prisma"
+import { prisma } from "@/lib/prisma"
 import { lucia } from "@/lib/auth"
 import { ObjectId } from "bson"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 import { Cookie } from "elysia"
 import { SignUpResponse } from "../dto/signup.dto"
+import {
+  generateEmailVerificationCode,
+  sendVerificationEmail,
+} from "./emailVerification"
 
 export const userSignUp = async (
   email: string,
@@ -20,7 +24,7 @@ export const userSignUp = async (
   }
 
   try {
-    const emailExists = await prismaClient.user.findUnique({
+    const emailExists = await prisma.user.findUnique({
       where: {
         email,
       },
@@ -43,14 +47,21 @@ export const userSignUp = async (
   )
 
   try {
-    const newUser = await prismaClient.user.create({
+    const newUser = await prisma.user.create({
       data: {
         email,
         name: username,
         hashedPassword: passwordHash,
         passwordSalt,
+        emailVerified: false,
       },
     })
+
+    const verificationCode = await generateEmailVerificationCode(
+      newUser.id,
+      email
+    )
+    await sendVerificationEmail(email, verificationCode)
 
     const session = await lucia.createSession(new ObjectId(newUser.id), {
       userId: newUser.id,
