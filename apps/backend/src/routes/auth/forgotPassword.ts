@@ -1,4 +1,4 @@
-import { rateGuard } from "@/middleware/rateLimitter"
+import { rateGuard } from "@/middleware/rateGuard"
 import Elysia from "elysia"
 import { passwordReset, verifyPasswordResetToken } from "./repo/forgotPassword"
 import {

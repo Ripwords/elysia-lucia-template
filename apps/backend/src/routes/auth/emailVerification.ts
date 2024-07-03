@@ -5,7 +5,7 @@ import {
   sendEmailVerification,
   verifyEmailVerificationCode,
 } from "./repo/emailVerification"
-import { rateGuard } from "@/middleware/rateLimitter"
+import { rateGuard } from "@/middleware/rateGuard"
 
 export const verifyEmail = new Elysia({
   prefix: "/email-verification",
