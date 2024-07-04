@@ -16,6 +16,7 @@ export const AuthController = new Elysia({
   },
 })
   .use(AuthService)
+  .use(rateGuard)
   .post(
     "/signin",
     async ({ body, cookie, AuthService }) => {
