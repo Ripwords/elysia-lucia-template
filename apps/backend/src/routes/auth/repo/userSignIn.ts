@@ -3,14 +3,14 @@ import { password as bunPassword } from "bun"
 import { lucia } from "@/lib/auth"
 import { ErrorHandler } from "@/lib/errors"
 import { prisma } from "@/lib/prisma"
-import { Cookie } from "elysia"
-import { SignInResponse } from "../dto/signin.dto"
+import { SignInResponseDto } from "../dto/signin.dto"
+import { CookieType } from "@/lib/utils/types"
 
 export const userSignIn = async (
   email: string,
   password: string,
   cookie: CookieType
-): Promise<SignInResponse> => {
+): Promise<SignInResponseDto> => {
   let user: Awaited<ReturnType<typeof prisma.user.findUnique>>
 
   try {

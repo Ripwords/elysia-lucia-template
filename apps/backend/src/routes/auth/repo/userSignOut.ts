@@ -1,6 +1,6 @@
-import { Cookie } from "elysia"
 import { lucia } from "@/lib/auth"
 import { ErrorHandler } from "@/lib/errors"
+import { CookieType } from "@/lib/utils/types"
 
 export const userSignOut = async (cookie: CookieType) => {
   const sessionCookie = cookie[lucia.sessionCookieName]

@@ -5,12 +5,12 @@ import { prisma } from "@/lib/prisma"
 import { lucia } from "@/lib/auth"
 import { ObjectId } from "bson"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
-import { Cookie } from "elysia"
 import { SignUpResponse } from "../dto/signup.dto"
 import {
   generateEmailVerificationCode,
   sendVerificationEmail,
 } from "./emailVerification"
+import { CookieType } from "@/lib/utils/types"
 
 export const userSignUp = async (
   email: string,
