@@ -1,4 +1,4 @@
-# Maid-in-X
+# Elysia + LuciaAuth + MongoDB
 
 ![example workflow](https://github.com/Ripwords/maidx/actions/workflows/test.yml/badge.svg)
 
