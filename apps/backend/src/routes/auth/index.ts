@@ -2,7 +2,7 @@ import Elysia from "elysia"
 import { signout } from "./signout"
 import { signup } from "./signup"
 import { signin } from "./signin"
-import { verifyEmail } from "./emailVerification"
+import { verifyEmail } from "./email-verification"
 import { forgotPassword } from "./forgot-password"
 
 export const AuthController = new Elysia({

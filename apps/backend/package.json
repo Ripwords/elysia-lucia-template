@@ -6,7 +6,8 @@
     "build": "bun build src/index.ts --target=bun --minify --splitting --outdir=dist",
     "start": "bun run build && NODE_ENV=production bun dist/index.js",
     "test": "bun lint && bun test --env-file=.env.test",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "db": "bun x prisma db"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
