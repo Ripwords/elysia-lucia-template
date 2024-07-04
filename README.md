@@ -1,6 +1,6 @@
 # Elysia + LuciaAuth + MongoDB
 
-![example workflow](https://github.com/Ripwords/maidx/actions/workflows/test.yml/badge.svg)
+![example workflow](https://github.com/Ripwords/elysia-lucia-template/actions/workflows/test.yml/badge.svg)
 
 ## Project Setup
 
