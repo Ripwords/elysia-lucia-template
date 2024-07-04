@@ -17,7 +17,7 @@ export const userSignUp = async (
   password: string,
   confirmPassword: string,
   username: string,
-  cookie: Record<string, Cookie<any>>
+  cookie: CookieType
 ): Promise<SignUpResponse> => {
   if (password !== confirmPassword) {
     throw ErrorHandler.BadRequest("Passwords do not match")

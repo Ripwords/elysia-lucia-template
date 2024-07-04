@@ -9,7 +9,7 @@ import { SignInResponse } from "../dto/signin.dto"
 export const userSignIn = async (
   email: string,
   password: string,
-  cookie: Record<string, Cookie<any>>
+  cookie: CookieType
 ): Promise<SignInResponse> => {
   let user: Awaited<ReturnType<typeof prisma.user.findUnique>>
 

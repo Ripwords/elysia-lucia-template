@@ -1,6 +1,6 @@
-import { t } from "elysia"
+import { Static, t } from "elysia"
 
-export const EmailVerificationDto = t.Object(
+export const EmailVerificationDtoObj = t.Object(
   {
     code: t.RegExp(/^[A-Za-z0-9]{8}$/, {
       error: "Invalid email verification code",
@@ -11,3 +11,5 @@ export const EmailVerificationDto = t.Object(
     examples: [{ code: "********" }],
   }
 )
+
+export type EmailVerificationDto = Static<typeof EmailVerificationDtoObj>
