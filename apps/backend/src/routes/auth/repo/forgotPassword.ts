@@ -83,5 +83,7 @@ export const verifyPasswordResetToken = async (token: string) => {
     },
   })
 
-  return true
+  return {
+    userId: resetToken.userId,
+  }
 }

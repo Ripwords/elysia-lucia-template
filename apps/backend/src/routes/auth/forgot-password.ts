@@ -5,6 +5,8 @@ import {
   ForgotPasswordDto,
   ForgotPasswordVerifyDto,
 } from "./dto/forgotPassword.dto"
+import { resetPassword } from "./repo/resetPassword"
+import { ErrorHandler } from "@/lib/errors"
 
 export const forgotPassword = new Elysia({
   prefix: "/forgot-password",
@@ -21,8 +23,15 @@ export const forgotPassword = new Elysia({
   )
   .post(
     "/:token",
-    async ({ params: { token } }) => {
-      return await verifyPasswordResetToken(token)
+    async ({ params: { token }, body: { password, confirmPassword } }) => {
+      const { userId } = await verifyPasswordResetToken(token)
+      if (userId) {
+        if (password !== confirmPassword) {
+          throw ErrorHandler.BadRequest("Passwords do not match")
+        }
+
+        return await resetPassword(userId, password)
+      }
     },
     {
       params: ForgotPasswordVerifyDto.params,
