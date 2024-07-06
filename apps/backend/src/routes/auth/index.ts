@@ -3,11 +3,12 @@ import { rateGuard } from "@/middleware/rateGuard"
 import Elysia from "elysia"
 import { AuthService } from "./auth.service"
 import {
-  ForgotPasswordDtoObj,
-  ForgotPasswordVerifyDtoObj,
+  ForgotPasswordDto,
+  ForgotPasswordVerifyDto,
 } from "./dto/forgotPassword.dto"
-import { SignInDtoObj, SignInResponseDtoObj } from "./dto/signin.dto"
-import { SignUpDtoObj, SignUpResponseDtoObj } from "./dto/signup.dto"
+import { SignInDto, SignInResponseDto } from "./dto/signin.dto"
+import { SignUpDto, SignUpResponseDto } from "./dto/signup.dto"
+import { EmailVerificationDto } from "./dto/emailVerification.dto"
 
 export const AuthController = new Elysia({
   prefix: "/auth",
@@ -23,8 +24,8 @@ export const AuthController = new Elysia({
       return await AuthService.signIn(body, cookie)
     },
     {
-      body: SignInDtoObj,
-      response: SignInResponseDtoObj,
+      body: SignInDto,
+      response: SignInResponseDto,
     }
   )
   .post(
@@ -33,8 +34,8 @@ export const AuthController = new Elysia({
       return await AuthService.signUp(body, cookie)
     },
     {
-      body: SignUpDtoObj,
-      response: SignUpResponseDtoObj,
+      body: SignUpDto,
+      response: SignUpResponseDto,
     }
   )
   .post("/signout", async ({ cookie, AuthService }) => {
@@ -49,7 +50,7 @@ export const AuthController = new Elysia({
           return await AuthService.forgotPassword(body)
         },
         {
-          body: ForgotPasswordDtoObj,
+          body: ForgotPasswordDto,
         }
       )
       .post(
@@ -58,7 +59,7 @@ export const AuthController = new Elysia({
           return await AuthService.verifyResetPassword(token, body)
         },
         {
-          body: ForgotPasswordVerifyDtoObj,
+          body: ForgotPasswordVerifyDto,
         }
       )
   )
@@ -77,6 +78,9 @@ export const AuthController = new Elysia({
             user,
             sessionCookie
           )
+        },
+        {
+          params: EmailVerificationDto,
         }
       )
   )

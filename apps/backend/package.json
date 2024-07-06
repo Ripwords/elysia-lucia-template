@@ -19,6 +19,7 @@
     "bson": "^6.7.0",
     "elysia": "^1.0.27",
     "elysia-rate-limit": "^4.1.0",
+    "errx": "^0.0.1",
     "logestic": "^1.2.0",
     "lucia": "^3.2.0",
     "nodemailer": "^6.9.14",

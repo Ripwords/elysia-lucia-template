@@ -1,6 +1,6 @@
 import { t, Static } from "elysia"
 
-export const SignInDtoObj = t.Object(
+export const SignInDto = t.Object(
   {
     email: t.String({ format: "email" }),
     password: t.String({ minLength: 8, maxLength: 64 }),
@@ -16,9 +16,9 @@ export const SignInDtoObj = t.Object(
   }
 )
 
-export type SignInDto = Static<typeof SignInDtoObj>
+export type SignInDto = Static<typeof SignInDto>
 
-export const SignInResponseDtoObj = t.Object(
+export const SignInResponseDto = t.Object(
   {
     id: t.String(),
     email: t.String({ format: "email" }),
@@ -29,4 +29,4 @@ export const SignInResponseDtoObj = t.Object(
   }
 )
 
-export type SignInResponseDto = Static<typeof SignInResponseDtoObj>
+export type SignInResponseDto = Static<typeof SignInResponseDto>

@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 import { lucia } from "@/lib/auth"
 import { ObjectId } from "bson"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
-import { SignUpResponse } from "../dto/signup.dto"
+import { SignUpResponseDto } from "../dto/signup.dto"
 import {
   generateEmailVerificationCode,
   sendVerificationEmail,
@@ -18,7 +18,7 @@ export const userSignUp = async (
   confirmPassword: string,
   username: string,
   cookie: CookieType
-): Promise<SignUpResponse> => {
+): Promise<SignUpResponseDto> => {
   if (password !== confirmPassword) {
     throw ErrorHandler.BadRequest("Passwords do not match")
   }
