@@ -33,8 +33,8 @@ bun dev
   - [Bun](https://bunjs.com/)
 
 - Frontend
-  - [React](https://reactjs.org/)
-  - [Tauri](https://v2.tauri.app/)
+  - [Nuxt](https://nuxt.com/)
+  - [Tauri v2](https://v2.tauri.app/) (TBA)
 
 ## Project Structure
 
