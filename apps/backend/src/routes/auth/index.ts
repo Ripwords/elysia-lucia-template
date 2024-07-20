@@ -45,7 +45,7 @@ export const AuthController = new Elysia({
     app
       .use(rateGuard)
       .post(
-        "/",
+        "",
         async ({ body, AuthService }) => {
           return await AuthService.forgotPassword(body)
         },
@@ -67,7 +67,7 @@ export const AuthController = new Elysia({
     app
       .use(authGuard)
       .use(rateGuard)
-      .post("/", async ({ user, AuthService }) => {
+      .post("", async ({ user, AuthService }) => {
         await AuthService.sendEmailVerification(user)
       })
       .post(

@@ -1,12 +1,5 @@
 {
   "name": "maidx",
-  "private": true,
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
   "devDependencies": {
     "prettier": "^3.2.5",
     "turbo": "^2.0.6",
@@ -16,13 +9,12 @@
     "node": ">=18"
   },
   "packageManager": "bun@1.1.17",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "dependencies": {
-    "@elysiajs/cron": "^1.0.3",
-    "oslo": "^1.2.0"
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "trustedDependencies": [
     "@prisma/client",
@@ -31,5 +23,13 @@
     "nuxt-app",
     "prisma",
     "protobufjs"
-  ]
+  ],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@elysiajs/eden": "^1.1.1",
+    "elysia": "^1.1.3"
+  }
 }
