@@ -10,3 +10,10 @@ export const envSchema = z.object({
   SMTP_PASSWORD: z.string(),
   SMTP_HOST: z.string(),
 })
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    interface ProcessEnv extends z.infer<typeof envSchema> {}
+  }
+}

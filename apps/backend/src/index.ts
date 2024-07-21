@@ -5,17 +5,18 @@ import { UsersController } from "@/routes/users"
 import cors from "@elysiajs/cors"
 import swagger from "@elysiajs/swagger"
 import Elysia from "elysia"
-import { Logestic } from "logestic"
 import { UnifyErrorPlugin } from "./lib/errors"
+import { logger } from "./plugins/logger"
 
 // Ensures that environment variables are set
 envSchema.parse(process.env)
+const baseURL = `http://localhost:${process.env.SERVER_PORT}`
 
 const app = new Elysia()
-  .use(Logestic.preset("fancy"))
+  .use(logger)
   .use(
     cors({
-      origin: process.env.WEBSITE_URL!,
+      origin: process.env.WEBSITE_URL,
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"],
     })
@@ -23,6 +24,7 @@ const app = new Elysia()
   .use(
     swagger({
       documentation: {
+        servers: [{ url: baseURL }],
         tags: [
           {
             name: "Authentication",
@@ -42,7 +44,7 @@ const app = new Elysia()
   .use(CronController)
   .listen(process.env.SERVER_PORT!, () => {
     console.log(
-      `🦊 Elysia is running! http://localhost:${process.env.SERVER_PORT}/swagger`
+      `🦊 Elysia is running! ${baseURL}/swagger`
     )
   })
 
